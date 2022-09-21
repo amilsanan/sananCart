@@ -1,0 +1,31 @@
+{
+  "name": "st-example-7th-week",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
+    "aws-sdk": "^2.1185.0",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.2",
+    "express": "~4.16.1",
+    "express-fileupload": "^1.4.0",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
+    "hbs": "~4.0.4",
+    "http-errors": "~1.6.3",
+    "mongodb": "^4.8.1",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^3.0.1",
+    "nocache": "^3.0.4",
+    "nodemon": "^2.0.19",
+    "otp-generator": "^4.0.0",
+    "razorpay": "^2.8.3",
+    "twilio": "^3.80.0"
+  }
+}

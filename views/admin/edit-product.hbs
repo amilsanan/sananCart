@@ -1,0 +1,58 @@
+<section>
+    <div class="container">
+        
+        <class class="row">
+            
+            <div class="col-md-6">
+                {{#each response}}
+                <h2 class="text-center">edit product</h2>
+                <form action="/admin/edit-product/{{this._id}}" method="post" enctype="multipart/form-data">
+                    <label for="">Name</label>
+                    <input type="text" name="Name" class="form-control " value="{{this.Name}}">
+
+                    <label for="">price</label>
+                    <input type="text" name="price" class="form-control" value="{{this.price}}">
+
+                    <label for="">description</label>
+                    <input type="text" name="description" class="form-control" value="{{this.description}}">
+
+
+                    <label for="">category</label>
+                    <br>
+                    <select name="category" class="form-control">
+                        <option value="men-tshirt">men-tshirt</option>
+                        <option value="men-shirt">men-shirt</option>
+                        <option value="women-tshirt">women-tshirt</option>
+                        <option value="women-kurthies">women-kurthies</option>
+                        
+                    </select>   <p class="text-danger"> &ensp;  current category is {{this.category}} </p>
+                      
+                    <br>
+
+                    <label for="">Image</label>
+                    <input type="file" name="Image" class="form-control" onchange="viewImage(event)">
+
+
+
+                    <button type="submit" class="btn btn-success mt-2">update</button>
+                    <a href="/admin" class="btn btn-primary mt-2"> back</a>
+
+                </form>
+            
+                
+            </div>
+            <div class="col-md-6">
+                <img  style="width:400px;height:500px"  src='/product-images/{{this._id}}.jpg' alt="" id="imgView">
+            </div>
+                
+            {{/each}}
+            
+        </class>
+         
+    </div>
+</section>
+<script>
+    function viewImage(event){
+        document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
+    }
+</script>

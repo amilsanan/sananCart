@@ -1,0 +1,24 @@
+<table class="table mt-5 container " style="height: 80px;">
+      <thead>
+        <tr>
+            <th scope="col">no</th>
+          <th scope="col">name</th>
+          <th scope="col">gmail</th>
+          <th scope="col">phoenNo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each user}}
+        <tr>
+          <th scope="row">{{@index}}</th>
+          <td>{{this.user}}</td>    
+          <td>{{this.Email}}</td>
+          <td>{{this.phoneNo}}</td>
+          <td>
+            <a href="/admin/delete/{{this._id}}" class="btn btn-danger"
+              onclick="return confirm ('delete{{this.name}}?')">block</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>

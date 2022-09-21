@@ -1,0 +1,173 @@
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 d-block" data-navbar-on-scroll="data-navbar-on-scroll">
+    <div class="container"><a class="navbar-brand d-inline-flex" href="index.html"><span
+                class="text-1000 fs-0 fw-bold ms-2">SANAN...</span></a>
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item px-2"><a class="nav-link fw-medium active" aria-current="page" href="/her">Women</a>
+                </li>
+                <li class="nav-item px-2"><a class="nav-link fw-medium" href="/him">Men</a></li>
+                <li class="nav-item px-2"><a class="nav-link fw-medium" href="/allProducts-view">Collection</a></li>
+
+            </ul>
+            <form class="d-flex"><a class="text-1000" href="/Orders">
+                   <i class="fa fa-folder-open-o mr-3" aria-hidden="true"></i></a><a class="text-1000" href="/cart">
+                    <svg class="feather feather-shopping-cart me-3" xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg></a><a class="text-1000" href="">
+                    <svg class="feather feather-search me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg></a><a class="text-1000" data-toggle="tooltip" data-placement="bottom" title="{{#if user}}
+            {{user.Email}}
+            {{else}}{{{body}}}
+            please login
+            {{/if}}" href="/login">
+                    <svg class="feather feather-user me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg></a><a class="text-1000" href="/wishlist">
+                    <svg class="feather feather-heart me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg></a></form>
+        </div>
+    </div>
+</nav>
+{{!-- <section class="container mt-5 mb-5">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {{#each Items}}
+        <div class="col">
+            <div class="card"><a href="/productView">
+                    <img src="/product-images/{{this.product._id}}.jpg" class="card-img-top" alt="..." /></a>
+                <div class="card-body">
+                    <h5 class="card-title">{{this.product.Name}}</h5>
+                    <p class="card-text">category {{this.product.Category}}</p>
+                    <p class="card-text">Price: {{this.product.description}}</p>
+
+                    <form class="d-flex">
+                        <button type="button" onclick="addToCart('{{this.product._id}}')"
+                            class="btn btn-primary btn-sm text-1000">add to cart
+                            <svg class="feather feather-shopping-cart me-3" xmlns="http://www.w3.org/2000/svg"
+                                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6">
+                                </path>
+                            </svg></button>
+
+                        <a class="btn btn-danger btn-sm text-1000" href="/remove-from-whislist/{{this.product._id}}"
+                            onclick="return confirm ('delete{{this.name}}?')"><button type="button">remove from wish
+                                list
+                                <svg class="feather feather-shopping-cart me-3" xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6">
+                                    </path>
+                                </svg> </a>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</section> --}}
+
+<!-- Product Section Begin -->
+{{!-- <section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="filter__controls">
+                    <li class="active" data-filter="*">Best Sellers</li>
+                    <li data-filter=".new-arrivals">New Arrivals</li>
+                    <li data-filter=".hot-sales">Hot Sales</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row product__filter">
+            {{#each Items}}
+            <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+
+                <div class="product__item">
+                    <div class="product_item_pic set-bg" data-setbg="/product-images/{{this.product._id}}.jpg">
+                        <span class="label">New</span>
+                        <ul class="product__hover">
+                            <li><a onclick="addToWishlist('{{this._id}}')"><img src="/userAssets/img/icon/heart.png"
+                                        alt=""></a></li>
+
+                    </div>
+                    <div class="product_item_text">
+
+                        <h6>{{this.product.Name}}</h6>
+
+                        <button onclick="addToCart('{{this.product._id}}')" class="add-cart">+ Add To Cart</button>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <h5>{{this.product.Price}}</h5>
+
+                    </div>
+                </div>
+
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section> --}}
+<!-- Product Section End -->
+<div class=" ">
+    <div class="container  " style="margin-top: 70px; ">
+        <div class="row g-2 mt-5 mb-5">
+            {{#each Items}}
+            <div class="col-lg-4 col-md-6 col-sm-6 border rounded p-2 mr-1" style="max-width:24.333%;">
+                <div class="product__item  rounded p-2">
+                    {{!-- <div class="product_item_pic set-bg" data-setbg="/product-images/{{this.product._id}}.jpg"
+                        style="width:500px;height:500px  "> --}}
+
+                        <img src="/product-images/{{this.product._id}}.jpg" alt="" style="width:250px;height:300px ">
+                        <div class="product__hover">
+                            <li><a href="/remove-from-whislist/{{this.product._id}}"> <i class="fa fa-heart " style="font-size:15px;color:black"></i>
+                            </a>
+                                <a href="#"><img src="images/cart.png" alt="" onclick="addToCart('{{this.product._id}}')"></a>
+                            </li>
+                        </div>
+                        {{!--
+                    </div> --}}
+                    <h6>Piqué Biker Jacket</h6>
+
+                    <h5>$67.24</h5>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+<style>
+    body{
+        background-color: rgba(255, 255, 255, 0.779);
+    }
+</style>

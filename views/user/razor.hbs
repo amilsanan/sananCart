@@ -1,0 +1,70 @@
+
+<script>
+const rzp = new Razorpay({
+ key_id: "YOUR_KEY_ID",
+ key_secret: "YOUR_KEY_SECRET",
+})
+
+const rzpOrder = await rzp.orders.create({
+ amount: amount * 100, // rzp format with paise
+ currency: 'INR',
+ receipt: "receipt#1" //Receipt no that corresponds to this Order,
+ payment_capture: true,
+ notes: {
+  orderType: "Pre"
+ } //Key-value pair used to store additional information
+})// To create recurring subscription
+const subscriptionObject = {
+ plan_id: PLAN_ID,
+ total_count: 60,
+ quantity: 1,
+ customer_notify: 1,
+ notes,
+}
+const subscription = await rzp.subscriptions.create(subscriptionObject)
+
+<button id=”rzp-button1">Pay</button>
+<script src=”https://checkout.razorpay.com/v1/checkout.js"></script> 
+<script> 
+ var options = 
+  {
+   “key”: “YOUR_KEY_ID”, // Enter the Key ID generated from the Dashboard 
+   "name": "Test Company", 
+   "order_id": "rzpOrder.id", // For one time payment
+   "subscription_id" : "subscription.id" // For recurring subscription
+   "prefill": {
+     "name": "Test User",
+     "email": "test.user@example.com",
+     "contact": "9999999999"
+   },
+   "theme": {
+    "color": "#3399cc"
+   },
+   // This handler function will handle the success payment
+   "handler": function (response) {
+    alert(response.razorpay_payment_id);
+    alert("Payment Successfull")
+   },
+};var rzp1 = new Razorpay(options);document.getElementById('rzp-button1').onclick = function (e) {
+  rzp1.open();
+  e.preventDefault();
+}
+rzp1.on('payment.failed', function (response)
+ {            
+  alert(response.error.code);     
+  alert(response.error.description);      
+  alert(response.error.source);
+  alert(response.error.step);     
+  alert(response.error.reason);
+  alert(response.error.metadata.order_id);
+  alert(response.error.metadata.payment_id);
+ })
+ </script>
+
+ const requestedBody = JSON.stringify(req.body)const receivedSignature = req.headers['x-razorpay-signature']const expectedSignature = crypto.createHmac('sha256', RAZORPAY_WEBHOOK_SECRET).update(requestedBody).digest('hex')if (receivedSignature === expectedSignature) { 
+  // Store in your DB
+} else {
+ res.status(501).send('received but unverified resp')
+}
+
+</script>

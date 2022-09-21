@@ -1,0 +1,37 @@
+<section>
+    <div class="container">
+        <class class="row">
+            <div class="col-md-6">
+                <h2 class="text-center">Add product</h2>
+                <form action="/admin/add-product" method="post" enctype="multipart/form-data">
+                    <label for="">Name</label>
+                    <input type="text" name="Name" class="form-control">
+
+                    <label for="">price</label>
+                    <input type="number" name="price" class="form-control">
+
+                    <label for="">description</label>
+                    <input type="text" name="description" class="form-control">
+                    <label for="">category</label>
+                    <br>
+                    <select name="category" class="form-control">
+                        <option value="men-tshirt">men-tshirt</option>
+                        <option value="men-shirt">men-shirt</option>
+                        <option value="women-tshirt">women-tshirt</option>
+                        <option value="women-kurthies">women-kurthies</option>
+                    </select>
+                    <br><br>
+
+                    <label for="">Image</label>
+                    <input type="file" name="Image" class="form-control">
+
+
+
+                    <button type="submit" class="btn btn-success mt-2">Submit</button>
+                    <a href="/admin" class="btn btn-primary mt-2"> back</a>
+
+                </form>
+            </div>
+        </class>
+    </div>
+</section>

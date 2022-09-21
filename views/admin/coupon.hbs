@@ -1,0 +1,26 @@
+
+<div class="d-flex justify-content-center p-3">
+    <form action="/admin/coupon" method="post">
+    coupon name<input type="text" placeholder="coupon code" name="couponName">
+    discount<input type="number" placeholder="discount" name="couponPercentage">
+    <button type="submit">add coupon</button>
+
+</form></div>
+<table class="table mt-5 container " style="height: 40px;">
+      <thead>
+        <tr>
+            <th scope="col">no</th>
+          <th scope="col">coupon name</th>
+          <th scope="col">discount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each coupons}}
+        <tr>
+          <th scope="row">{{@index}}</th>
+          <td>{{this.couponName}}</td>    
+          <td>{{this.couponPercentage}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
