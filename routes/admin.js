@@ -65,10 +65,13 @@ router.post('/edit-product/:id',function (req,res){
    let id=req.params.id
   console.log(req.body,'==params==',req.params.id);
   productHelpers.updateProduct(id,req.body).then(()=>{
-    res.redirect('/admin')
-    let image=req.files.Image
-    image.mv('./public/product-images/'+id+'.jpg')     //moving image to public
-
+    if(req.files==null){
+      res.redirect('/admin')
+    }else{
+      let image=req.files.Image
+      image.mv('./public/product-images/'+id+'.jpg')     //moving image to public
+      res.redirect('/admin')
+    }
   })
     
  
@@ -97,31 +100,45 @@ router.get('/admin-user-view',function (req,res){
   
 })
 router.get('/coupon',function (req,res){
+  console.log('a');
+  console.log(req.body);
+  console.log('a',req.params);
     productHelpers.getCoupons().then((coupons)=>{
       console.log('hil');
       console.log(coupons);
-      res.render('admin/coupon',{coupons})  
+      res.render('admin/coupon',{coupons,adminOn})  
     })
     
 })
+
 router.post('/coupon',function (req,res){
   console.log(req.body.couponName);
   productHelpers.addCoupon(req.body).then(()=>{
     res.redirect("/admin/coupon")
-  })
- 
+  }) 
 })
+
+router.post('/changestatus',function (req,res){
+  console.log('k',req.body)
+  let userId=req.session.userId
+   userHelpers.changeOrderStatus(req.body.proId,req.body.status,userId).then((res)=>{
+    console.log(res)
+    res.json(res);
+   })
+  })
+
 router.get('/orderSummery',function (req,res){
   userHelpers.getOrderforAdmin().then((items)=>{
     console.log('items=',items);
-    res.render("admin/orderSummery",{items})    
+    res.render("admin/orderSummery",{items,adminOn})    
   })
 })
+
 router.get('/orderProView/:id',function (req,res){
   let userId=req.params.id
   userHelpers.getOrder(userId).then((items)=>{
     console.log('items=',items);
-    res.render("admin/orderProductVIew",{items})    
+    res.render("admin/orderProductVIew",{items,adminOn,userId})    
   })
 })
 

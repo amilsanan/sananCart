@@ -5,6 +5,7 @@ const { CART } = require('../config/collections');
 // const { ObjectId } = require('mongodb');
 var ObjectId=require('mongodb').ObjectId
 const Razorpay = require('razorpay');
+const { isNull } = require('util');
 
 let cartQuan=1
 
@@ -152,39 +153,38 @@ module.exports={
         })
     },
     cartQuantity:(details) => {
-        console.log('details-',details);
+        console.log('az=',details);
         details.count = parseInt(details.count)
         details.quantity = parseInt(details.quantity)
         console.log(details, 'fdsfsdfsd');
 
         return new Promise((resolve, reject) => {
-            if (details.count == -1 && details.quantity == 1) {
-                db.get().collection(collection.CART_COLLECTION)
-                    .updateOne({ _id: ObjectId(details.cart) },
-                        {
-                            $pull: { products: { item: ObjectId(details.product) } }
-                        }
-                    ).then((response) => {
-                        resolve({ removeProduct: true })
-                    })
-            } else {
+            // if (details.count == -1 && details.quantity == 1) {
+            //     db.get().collection(collection.CART_COLLECTION)
+            //         .updateOne({ _id: ObjectId(details.cart) },
+            //             {
+            //                 $pull: { products: { item: ObjectId(details.product) } }
+            //             }
+            //         ).then((response) => {
+            //             resolve({ removeProduct: true })
+            //         })
+            // } else {
                 db.get().collection(collection.CART_COLLECTION)
                     .updateOne({ _id: ObjectId(details.cart), 'products.item': ObjectId(details.product) },
                         {
                             $inc: { 'products.$.quantity': details.count }
                         }).then((response) => {
-
-
+                            console.log('rewq=');
                             resolve({ status: true })
 
                         })
-            }
+            // }
 
         })
     },
     getTotalAmount: (userId) => {
         return new Promise(async (resolve, reject) => {
-            let a=2
+            
 
             let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
                 {
@@ -221,8 +221,7 @@ module.exports={
                 }
 
             ]).toArray()
-            console.log('dddddddddddd',total);
-            resolve(total[0]?.total,a)
+            resolve(total[0]?.total)
             console.log(total[0]?.total);
         })
     },
@@ -272,11 +271,7 @@ module.exports={
 
     },
     getWishlistProducts:async (userId) => {
-        console.log("reached");
-        console.log(userId);
         let a = await db.get().collection(collection.WISHLIST_COLLECTION).find().toArray()
-        console.log(a);
-
         return new Promise(async (resolve, reject) => {
             console.log('wishlist promise');
 
@@ -360,7 +355,6 @@ module.exports={
             var payStatus=null
             hmac = hmac.digest('hex')
             if (hmac == details['payment[razorpay_signature]']) {
-                //console.log("done");
                 payStatus=true
                 resolve(payStatus)
             } else {
@@ -445,10 +439,10 @@ module.exports={
                 }
 
             ]).toArray()
-            console.log('kk=',pro_detail);
-            console.log('kl=',pro_detail[1]);
-            console.log('km=',pro_detail.product);
-            console.log('kn=',pro_detail[0]);
+            // order atatus to eackh object in array
+            pro_detail.forEach((element) => {
+                element.order_status = 'placed'
+              });
             let orderlist={
                 date:currentDate,
                 user:order_Coll.user,
@@ -458,7 +452,7 @@ module.exports={
             }
             console.log('a=',orderlist);
            await db.get().collection(collection.ORDER_COLLECTION).insertOne(orderlist)
-        //    await db.get().collection(collection.CART_COLLECTION).deleteOne({"user":ObjectId(userId)})
+           await db.get().collection(collection.CART_COLLECTION).deleteOne({"user":ObjectId(userId)})
            
            resolve(order_Coll)
         })
@@ -468,10 +462,56 @@ module.exports={
             resolve(ordertems)
         })
     },
+    changeOrderStatus:(proId,status,userId)=>{
+        return new Promise(async(resolve, reject) => {
+            await db.get().collection(collection.ORDER_COLLECTION).findOneAndUpdate(
+                    { user:ObjectId(userId),
+                       "products.item":ObjectId(proId)
+                    },
+                    { $set:{
+                       'products.$.order_status': status
+                  }
+                 }
+                );
+        })
+    },
     getOrderforAdmin:()=>{
         return new Promise(async(resolve, reject) => {
           let ordertems=await db.get().collection(collection.ORDER_COLLECTION).find().toArray()
             resolve(ordertems)
+        })
+    },editProfile:(userId,data)=>{
+        return new Promise(async(resolve, reject) => {
+        db.get().collection(collection.USER_COLLECTION).updateOne({_id:ObjectId(userId)},{
+            $set:{
+                user:data.userName,
+                Email: data.userEmail,
+                phoneNo: data.userMobile,
+                address1:data.address,
+                address:data.address1,
+                pin:data.pin
+            }
+           }).then((response)=>{
+            console.log(response);
+            resolve(userId)
+           })
+        })
+    },
+    cheackCoupon:(coupon)=>{
+        console.log(coupon);
+        return new Promise(async(resolve, reject) => {
+        let c=await db.get().collection(collection.COUPON_COLLECTION).findOne({couponName:coupon})
+        console.log('pk=',c);
+        if(c!=null){
+        console.log('l',c);
+        let copounStatus=true
+        resolve({copounStatus,c})
+    }
+    else{
+            let copounStatus=false
+            console.log('no coupon');
+            resolve(copounStatus)
+        }
         })
     },
     //kkkkk

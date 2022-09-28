@@ -62,10 +62,11 @@ router.post('/otp', (req, res)=> {
 
 router.get('/login',async function(req, res, next) {
   if(req.session.loggedIn){
+    let u=req.session.userId
    let a= await userHelpers.getAUser(req.session.userId)
    console.log('req=',req.session.userId);
    console.log('a=',a);
-    res.render('user/user-profile',{a})
+    res.render('user/user-profile',{a,u})
   }else{
     res.render('user/user-login');
   }
@@ -127,8 +128,14 @@ router.get('/m-tshirt-view', function(req, res, next) {
   
 })
 
-router.get('/productView',(req,res)=>{
-  res.render('user/product-view')
+router.get('/productView/:id',(req,res)=>{
+  let proId=req.params.id
+  console.log('mm1',proId);
+   productHelpers.getProductDetails(proId).then((response)=>{
+    console.log(response);
+    res.render('user/product-view',{response})
+   })
+
 })
 
 router.get('/cart',verifyLogin,async function(req, res, next) {
@@ -182,10 +189,15 @@ router.get('/deleteproductcart/:id',verifyLogin,(req,res)=>{
 })
 
 router.get('/checkout',verifyLogin,async(req,res)=>{ 
-  let amt=await userHelpers.getTotalAmount(req.session.userId)
+  let sub_amt=await userHelpers.getTotalAmount(req.session.userId)
+  let amt=sub_amt-req.session.coupon
+  let code=req.session.coupon
   let pro=await userHelpers.getCartProducts(req.session.userId)
-  res.render('user/checkout',{amt,pro})
+  console.log('pro=',pro);
+  let a= await userHelpers.getAUser(req.session.userId)
+  res.render('user/checkout',{sub_amt,amt,pro,a,code})
 })
+
 router.get('/succesPage',verifyLogin,(req,res)=>{  
   res.render('user/paymentSuccessfillPage')
 })
@@ -205,6 +217,7 @@ router.post('/place-order',verifyLogin,async (req,res)=>{
   console.log('hi',req.body);
   // let order=await userHelpers.getOrder(req.session.userId)
   let amt=await userHelpers.getTotalAmount(req.session.userId)
+  amt=amt-req.session.coupon
   console.log('amt=',amt);
  await userHelpers.addingAddress(req.body,req.session.userId)
   if(req.body.payment_method=='COD'){
@@ -229,18 +242,52 @@ router.get('/Orders',verifyLogin,(req,res)=>{
   
 })
 
+router.get('/edit_profile',async(req,res)=>{
+  let user=req.session.userId
+  let a= await userHelpers.getAUser(req.session.userId)
+  res.render('user/edit_profile',{a,user})
+})
+
+router.post('/edit_profile',async(req,res)=>{
+  console.log(req.body);
+  userHelpers.editProfile(req.session.userId,req.body).then(()=>{
+    if(req.files==null){
+      res.redirect('/login')
+    }else{
+    let image=req.files.Image
+    image.mv('./public/product-images/'+req.session.userId+'.jpg')     //moving image to public
+    res.redirect('/login')
+  }
+  })
+})
+
 router.get('/logout',(req,res)=>{
   req.session.loggedIn=false
   res.redirect('/')
 })
 
 router.post('/change-quantity',verifyLogin,(req,res,next)=>{
-  console.log(req.body);
   console.log('hi22');
-  userHelpers.cartQuantity(req.body).then(async() => {
+  userHelpers.cartQuantity(req.body).then(async(response) => {
     response.total = await userHelpers.getTotalAmount(req.session.userId)
     res.json(response)
   })
+})
+
+
+router.post('/cheackCoupon',verifyLogin,(req,res,next)=>{
+  console.log('sds=',req.body);
+  userHelpers.cheackCoupon(req.body.couponcode).then((response)=>{
+    console.log('response',response);
+    req.session.coupon=response.c.couponPercentage
+    if(response.copounStatus==true){
+      res.json(response)
+    }
+    else{
+      res.json("no valid")
+    }
+  })
+  
 })
 
 function creatingOrder(userId){

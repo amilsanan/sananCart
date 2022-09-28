@@ -1,23 +1,55 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__text">
-                        <h4>Check Out</h4>
-                        <div class="breadcrumb__links">
-                            <a href="./index.html">Home</a>
-                            <a href="./shop.html">Shop</a>
-                            <span>Check Out</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Breadcrumb Section End -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 d-block"
+    data-navbar-on-scroll="data-navbar-on-scroll">
+    <div class="container"><a class="navbar-brand d-inline-flex" href="/"><span class="text-1000 fs-0 fw-bold ms-2">SANAN...</span></a>
+      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item px-2"><a class="nav-link fw-medium active" aria-current="page"
+              href="/her">Women</a></li>
+          <li class="nav-item px-2"><a class="nav-link fw-medium" href="/him">Men</a></li>
+          <li class="nav-item px-2"><a class="nav-link fw-medium" href="/allProducts-view">Collection</a></li>
+          
+        </ul>
+        <form class="d-flex"><a class="text-1000" href="">
+            <i class="fa fa-folder-open-o mr-3" aria-hidden="true"></i></a><a class="text-1000" href="">
+            <svg class="feather feather-shopping-cart me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg></a><a class="text-1000" href="">
+            <svg class="feather feather-search me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg></a><a class="text-1000" data-toggle="tooltip" data-placement="bottom" title="{{#if user}}
+            {{user.Email}}
+            {{else}}{{{body}}}
+            please login
+            {{/if}}"
+            href="/signin">
+            <svg class="feather feather-user me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg></a><a class="text-1000" href="/wishlist">
+            <svg class="feather feather-heart me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+              </path>
+            </svg></a></form>
+      </div>
+    </div>
+  </nav>
 
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
@@ -26,79 +58,41 @@
                 <form  id="checkout-form">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
-                            <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
-                            here</a> to enter your code</h6>
                             <h6 class="checkout__title">Billing Details</h6>
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="checkout__input">
                                     <div class="checkout__input">
                                         <p>Fist Name<span>*</span></p>
-                                        <input type="text" name="firstName">
+                                        <input type="text" name="firstName" value="{{a.[0].user}}">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Last Name<span>*</span></p>
-                                        <input type="text" name="lastName">
-                                    </div>
-                                </div>
+                               
                             </div>
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" placeholder="Street Address" class="checkout__input__add" name="streetName">
-                                <input type="text" placeholder="Apartment, suite, unite ect (optinal)" name="moreAddress">
+                                <input type="text"   value="{{a.[0].address}}" class="checkout__input__add" name="streetName">
+                                <input type="text" value="{{a.[0].address1}}" name="moreAddress">
                             </div>
+                            
                             <div class="checkout__input">
-                                <p>Town/City<span>*</span></p>
-                                <input type="text" name="town">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Country/State<span>*</span></p>
-                                <input type="text" name="state">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Postcode / ZIP<span>*</span></p>
-                                <input type="text" name="pin">
+                                <p>pin<span>*</span></p>
+                                <input type="text" name="pin" value="{{a.[0].pin}}">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" value="{{a.[0].phoneNo}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" value="{{a.[0].Email}}">
                                     </div>
                                 </div>
                             </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="acc">
-                                    Create an account?
-                                    <input type="checkbox" id="acc">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <p>Create an account by entering the information below. If you are a returning customer
-                                please login at the top of the page</p>
-                            </div>
-                            <div class="checkout__input">
-                                <p>Account Password<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="diff-acc">
-                                    Note about your order, e.g, special noe for delivery
-                                    <input type="checkbox" id="diff-acc">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="checkout__input">
-                                <p>Order notes<span>*</span></p>
-                                <input type="text"
-                                placeholder="Notes about your order, e.g. special notes for delivery.">
-                            </div>
+                            
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
@@ -106,13 +100,14 @@
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                {{#each pro}}
                                 <ul class="checkout__total__products">
-                                    {{!-- <li>qty <span>{{pro.quantity}}</span></li> --}}
-                                    <li>{{this.product.Name}} <span>$ {{this.product.price}}</span></li>
+                                    <li>{{this.product.Name}}<span> Rs. {{this.product.price}}</span></li>
+                                    {{!-- <li><span>{{this.quantity}}</span></li> --}}
                                 </ul>
                                 {{/each}}
                                 <ul class="checkout__total__all">
-                                    <li>Subtotal <span>{{amt}}</span></li>
-                                    <li>Total <span>${{amt}}.99</span></li>
+                                    <li>Subtotal <span>{{sub_amt}}</span></li>
+                                    <li>less-coupon <span>-{{code}}</span></li>
+                                    <li>Total <span>Rs.{{amt}}</span></li>
                                 </ul>
                                 
                                 
@@ -206,32 +201,7 @@
 
 
     <script>
- /*    $('#checkout-form').submit((e) => {
-  e.preventDefault()
- 
-  $.ajax({
-    url: '/place-order',
-    method: 'post',
-    data: $('#checkout-form').serialize(),
-    success: (response) => {
-      console.log("ajax=", response);
-      
-      if (response.codSuccess) {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Payment Success',
-          showConfirmButton: false,
-          timer: 2000
-        }).then(() => {
-          location.href = '/';
-        })
-      } else {
-        razorpayPayment(response);
-      }
-    }
-  })
-})*/$('#checkout-form').submit((e) => {
+$('#checkout-form').submit((e) => {
     console.log("jkdhsjak")
   e.preventDefault()
   $.ajax({

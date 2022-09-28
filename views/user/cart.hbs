@@ -1,304 +1,338 @@
 {{!-- <section>
-  <div class="container">
-    <table class="table ">
-      <thead>
-        <tr>
-          <th scope="col">index</th>
-          <th scope="col">image</th>
-          <th scope="col">name</th>
-          <th scope="col">quantity</th>
-          <th scope="col">price</th>
-         
-        </tr>
-      </thead>
-      <tbody>
-        {{#each products}}
-        <tr>
-          <th scope="row">{{@index}}</th>
-          <td><img style="width:50px;height:50px " src='/product-images/{{this._id}}.jpg' alt=""></td>
-          <td>{{this.Name}}</td>
-          <td>{{this.category}}</td>
-          <td>{{this.description}}</td>
-          
-          <td>
-            
-            <a href="/removeProduct{{this._id}}" class="btn btn-danger"
-              onclick="return confirm ('remove{{this.name}}?')">remove</a>
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
+    <div class="container">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th scope="col">index</th>
+                    <th scope="col">image</th>
+                    <th scope="col">name</th>
+                    <th scope="col">quantity</th>
+                    <th scope="col">price</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td><img style="width:50px;height:50px " src='/product-images/{{this._id}}.jpg' alt=""></td>
+                    <td>{{this.Name}}</td>
+                    <td>{{this.category}}</td>
+                    <td>{{this.description}}</td>
+
+                    <td>
+
+                        <a href="/removeProduct{{this._id}}" class="btn btn-danger"
+                            onclick="return confirm ('remove{{this.name}}?')">remove</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 </section> --}}
 
 
 
-    <!-- Offcanvas Menu Begin -->
+<!-- Offcanvas Menu Begin -->
 
 
-<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 d-block"
-    data-navbar-on-scroll="data-navbar-on-scroll">
-    <div class="container"><a class="navbar-brand d-inline-flex" href="/"><span class="text-1000 fs-0 fw-bold ms-2">SANAN...</span></a>
-      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item px-2"><a class="nav-link fw-medium active" aria-current="page"
-              href="/her">Women</a></li>
-          <li class="nav-item px-2"><a class="nav-link fw-medium" href="/him">Men</a></li>
-          <li class="nav-item px-2"><a class="nav-link fw-medium" href="/allProducts-view">Collection</a></li>
-          
-        </ul>
-        <form class="d-flex"><a class="text-1000" href="">
-            <i class="fa fa-folder-open-o mr-3" aria-hidden="true"></i></a><a class="text-1000" href="">
-            <svg class="feather feather-shopping-cart me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <circle cx="9" cy="21" r="1"></circle>
-              <circle cx="20" cy="21" r="1"></circle>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg></a><a class="text-1000" href="">
-            <svg class="feather feather-search me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg></a><a class="text-1000" data-toggle="tooltip" data-placement="bottom" title="{{#if user}}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 d-block" data-navbar-on-scroll="data-navbar-on-scroll">
+    <div class="container"><a class="navbar-brand d-inline-flex" href="/"><span
+                class="text-1000 fs-0 fw-bold ms-2">SANAN...</span></a>
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item px-2"><a class="nav-link fw-medium active" aria-current="page" href="/her">Women</a>
+                </li>
+                <li class="nav-item px-2"><a class="nav-link fw-medium" href="/him">Men</a></li>
+                <li class="nav-item px-2"><a class="nav-link fw-medium" href="/allProducts-view">Collection</a></li>
+
+            </ul>
+            <form class="d-flex"><a class="text-1000" href="">
+                    <i class="fa fa-folder-open-o mr-3" aria-hidden="true"></i></a><a class="text-1000" href="">
+                    <svg class="feather feather-shopping-cart me-3" xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg></a><a class="text-1000" href="">
+                    <svg class="feather feather-search me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg></a><a class="text-1000" data-toggle="tooltip" data-placement="bottom" title="{{#if user}}
             {{user.Email}}
             {{else}}{{{body}}}
             please login
-            {{/if}}"
-            href="/signin">
-            <svg class="feather feather-user me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg></a><a class="text-1000" href="/wishlist">
-            <svg class="feather feather-heart me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-              </path>
-            </svg></a></form>
-      </div>
+            {{/if}}" href="/signin">
+                    <svg class="feather feather-user me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg></a><a class="text-1000" href="/wishlist">
+                    <svg class="feather feather-heart me-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg></a></form>
+        </div>
     </div>
-  </nav>
+</nav>
 
 
-    <!-- Shopping Cart Section Begin -->
-    <section class="shopping-cart spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="shopping__cart__table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            {{#each cartItems}}
-                            <tbody>
-                                <tr>
-                                    <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <img src="/product-images/{{this.product._id}}.jpg" width="80" height="100" alt="">
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <h6>{{this.product.Name}}</h6>
-                                            <h5>Rs: {{this.product.price}}</h5>
-                                            
-                                        </div>
-                                    </td>
-                                    <td >
-                                        <button class=" button-minus border rounded-circle icon-shape icon-sm cart-item-count mr-3" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.product.price}}',-1)">-</button>
-                                        <span id="{{this.product._id}}">{{this.quantity}}</span>
-                                        
-                                        <button class="button-minus border rounded-circle icon-shape icon-sm cart-item-count mr-3" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.product.price}}',1)">+</button>
-                                    </td>
-                                    <td class="cart__price" id="total{{this.product._id}}"></td>
-                                    <td class="cart__close" ><a href="/deleteproductcart/{{this.product._id}}" onclick="return confirm ('delete{{this.name}}?')"><i class="fa fa-close"></i></a></td>
-                                </tr>
-                                
-                            </tbody>
-                            {{/each}}
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="continue__btn">
-                                <a href="#">Continue Shopping</a>
-                            </div>
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="shopping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        {{#each cartItems}}
+                        <tbody>
+                            <tr>
+                                <td class="product__cart__item">
+                                    <div class="product__cart__item__pic">
+                                        <img src="/product-images/{{this.product._id}}.jpg" width="80" height="100"
+                                            alt="">
+                                    </div>
+                                    <div class="product__cart__item__text">
+                                        <h6>{{this.product.Name}}</h6>
+                                        <h5>Rs: {{this.product.price}}</h5>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <button
+                                        class=" button-minus border rounded-circle icon-shape icon-sm cart-item-count mr-3"
+                                        onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.product.price}}',-1)"
+                                        id="disable{{this.product._id}}" disabled="false">-</button>
+
+                                    <span id="{{this.product._id}}">{{this.quantity}}</span>
+
+                                    <button
+                                        class="button-minus border rounded-circle icon-shape icon-sm cart-item-count mr-3"
+                                        onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.product.price}}',1)">+</button>
+                                </td>
+                                <td class="cart__price" id="total{{this.product._id}}">Rs.{{this.product.price}}</td>
+                                <td class="cart__close"><a href="/deleteproductcart/{{this.product._id}}"
+                                        onclick="return confirm ('delete{{this.name}}?')"><i
+                                            class="fa fa-close"></i></a></td>
+                            </tr>
+
+                        </tbody>
+                        {{/each}}
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn">
+                            <a href="#">Continue Shopping</a>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="continue__btn update__btn">
-                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
-                            </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn update__btn">
+                            <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="cart__discount">
-                        <h6>Discount codes</h6>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart__discount">
+                    <h6>Discount codes</h6>
+                    <form  id="couponcode"> 
+                        <input type="text" name="couponcode" placeholder="Coupon code">
+                        <button type="submit" >Apply</button>
+                    </form>
+                </div>
+                <div class="cart__total">
+                    <h6>Cart total</h6>
+                    <ul>
+                        <li>Subtotal <span id="subtotal">{{totalvalue}}</span></li>
+                        <li>coupon discount <span id="cou"></span></li>
+                        <li>Total <span id="total">Rs. {{totalvalue}}</span></li>
+                    </ul>
+                    <a href="/checkout" class="primary-btn">Proceed to checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shopping Cart Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">parseInt(proId)
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                    </div>
+                    <p>The customer is at the heart of our unique business model, which includes design.</p>
+                    <a href="#"><img src="img/payment.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Shopping</h6>
+                    <ul>
+                        <li><a href="#">Clothing Store</a></li>
+                        <li><a href="#">Trending Shoes</a></li>
+                        <li><a href="#">Accessories</a></li>
+                        <li><a href="#">Sale</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Shopping</h6>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Payment Methods</a></li>
+                        <li><a href="#">Delivary</a></li>
+                        <li><a href="#">Return & Exchanges</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>NewLetter</h6>
+                    <div class="footer__newslatter">
+                        <p>Be the first to know about new arrivals, look books, sales & promos!</p>
                         <form action="#">
-                            <input type="text" placeholder="Coupon code">
-                            <button type="submit">Apply</button>
+                            <input type="text" placeholder="Your email">
+                            <button type="submit"><span class="icon_mail_alt"></span></button>
                         </form>
                     </div>
-                    <div class="cart__total">
-                        <h6>Cart total</h6>
-                        <ul>
-                            <li >Subtotal <span id="total"></span></li>
-                            <li>Total <span>$ {{totalvalue}}</span></li>
-                        </ul>
-                        <a href="/checkout" class="primary-btn">Proceed to checkout</a>
-                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Shopping Cart Section End -->
-
-    <!-- Footer Section Begin -->
-    <footer class="footer">parseInt(proId)
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                        </div>
-                        <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="#">Clothing Store</a></li>
-                            <li><a href="#">Trending Shoes</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Sale</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivary</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>NewLetter</h6>
-                        <div class="footer__newslatter">
-                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                            <form action="#">
-                                <input type="text" placeholder="Your email">
-                                <button type="submit"><span class="icon_mail_alt"></span></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="footer__copyright__text">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p>Copyright ©
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script>2020
-                            All rights reserved | This template is made with <i class="fa fa-heart-o"
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer__copyright__text">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <p>Copyright ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>2020
+                        All rights reserved | This template is made with <i class="fa fa-heart-o"
                             aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        </p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
+                    </p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </div>
             </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
-
-    <!-- Search Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
         </div>
     </div>
-    <!-- Search End -->
+</footer>
+<!-- Footer Section End -->
+
+<!-- Search Begin -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch">+</div>
+        <form class="search-model-form">
+            <input type="text" id="search-input" placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search End -->
 
 
 <style>
     icon-shape {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    vertical-align: middle;
-}
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        vertical-align: middle;
+    }
 
-.icon-sm {
-    width: 2rem;
-    height: 2rem;
-    
-}
+    .icon-sm {
+        width: 2rem;
+        height: 2rem;
+
+    }
 </style>
- 
 
- <script>
 
-function changeQuantity(cartId,proId,price,count) {
-        
-       /* let quantity = ""+proId
-        count = ""+count*/
-        //let price=parseInt(price)
+<script>
+    let z=document.getElementById('subtotal').innerHTML
+    z=parseInt(z)
+    $('#couponcode').submit((e) => {
+    console.log("jkdhsjak")
+  e.preventDefault()
+  $.ajax({
+    url: '/cheackCoupon',
+    method: 'post',
+    data: $('#couponcode').serialize(),
+    success: (response) => {
+        if(response.copounStatus==true){
+        document.getElementById('cou').innerHTML=-response.c.couponPercentage
+        document.getElementById('total').innerHTML= z-response.c.couponPercentage
+        }else{
+        document.getElementById('cou').innerHTML="no valid coupon"
+            
+        }total
+
+    }
+  })
+})
+
+
+    function changeQuantity(cartId, proId, price, count) {
+      
+
         let quantity = parseInt(document.getElementById(proId).innerHTML)
+
         count = parseInt(count)
 
         $.ajax({
             url: '/change-quantity',
             data: {
-               // user: userId,
+                // user: userId,
                 cart: cartId,
                 product: proId,
                 count: count,
                 quantity: quantity
             },
             method: 'post',
-            success: (response) => {
-                if (response.removeProduct) {
-                    alert("Product removed from cart")
-                    location.reload()
-                } else {
-                    console.log(response)
-                    document.getElementById(proId).innerHTML = quantity + count
-                    
-                    document.getElementById('total'+proId).innerHTML = quantity*price
-                }
+            success: (response) => {                
+                    document.getElementById(proId).innerHTML = quantity + count         //quantity
+                    j = quantity + count
+                    document.getElementById('total' + proId).innerHTML = 'Rs.' + j * price //price total
+
+                    if (j <= 1) {
+                        document.getElementById("disable"+proId).disabled = true;
+
+                    } else {
+                        document.getElementById("disable"+proId).disabled = false;
+
+                    }
+
+                document.getElementById('subtotal').innerHTML ='Rs.'+ response.total
+                document.getElementById('total').innerHTML ='Rs.'+ response.total
 
             }
         })
-}
+    }
 
 
 
 
-
- </script>
+</script>

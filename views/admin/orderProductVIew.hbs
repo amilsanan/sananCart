@@ -9,19 +9,32 @@
           <th scope="col">quantity</th>
           <th scope="col">price</th>
           <th scope="col">image</th>
+          <th scope="col">status</th>
         </tr>
       </thead>
       <tbody>
         {{#each items}}
-        {{#each products}}
+        {{#each this.products}}
         <tr>
           <th scope="row">{{@index}}</th>
-          
+
           <td>{{this.item}}</td>
           <td>{{this.product.Name}}</td>
           <td>{{this.quantity}}</td>
           <td>{{this.product.price}}</td>
           <td><img style="width:50px;height:50px " src='/product-images/{{this.product._id}}.jpg' alt=""></td>
+          <td>
+            <form action=""> <select name="category" class="form-control" id="myList{{this.item}}"
+                onchange="favTutorial('{{this.item}}')" value="{{this.order_status}}">
+                <option>{{this.order_status}}</option>
+                <option>placed</option>
+                <option>shipped</option>
+                <option>delivered</option>
+              </select></form>
+          </td>
+          <td>
+            <h4 id="favourite{{this.item}}"></h4>
+          </td>
         </tr>
         {{/each}}
         {{/each}}
@@ -29,3 +42,29 @@
     </table>
   </div>
 </section>
+<script>
+
+  function favTutorial(id) {
+    var mylist = document.getElementById("myList" + id);
+    //document.getElementById("favourite" + id).innerHTML = mylist.options[mylist.selectedIndex].text;  
+let j = mylist.options[mylist.selectedIndex].text;
+   //document.write(mylist.options[mylist.selectedIndex].text)
+    //location.href='/admin/changestatus/'+id
+    callIt(id, j)
+  }
+
+  function callIt(id, j) {
+    // document.write('aa')
+    $.ajax({
+      url: '/admin/changestatus',
+      method: 'post',
+      data: {
+        status: j,
+        proId: id
+      },
+      success: (res) => {
+        alert('changed')
+      }
+    })
+  }
+</script>
