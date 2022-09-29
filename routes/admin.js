@@ -39,6 +39,59 @@ router.get('/add-product',function (req,res){
   res.render('admin/add-product',{adminOn})
 })
 
+  router.get('/graph',async(req,res,next)=>{
+    try {
+      
+  
+        
+        let delivery = {}
+        delivery.Placed = 'placed'
+        delivery.Shipped = 'shipped'
+        delivery.Deliverd = 'deliverd'
+        const allData = await Promise.all
+            ([
+              adminHelpers.onlinePaymentCount(),
+              adminHelpers.totalUsers(),
+              adminHelpers.totalOrder(),
+              adminHelpers.cancelOrder(),
+              adminHelpers.totalCOD(),
+              adminHelpers.totalDeliveryStatus(delivery.Placed),
+              adminHelpers.totalDeliveryStatus(delivery.Shipped),
+              adminHelpers.totalDeliveryStatus(delivery.Deliverd),
+              adminHelpers.totalCost(),
+        
+            ]);
+            
+            console.log('dahsifffffffffffffff');
+            console.log(allData[0]);
+            console.log(allData[1]);
+            console.log(allData[2]);
+            console.log('3=',allData[3]);
+            console.log(allData[4]);
+            console.log('5=',allData[5]);
+            console.log(allData[6]);
+            console.log('7',allData[7]);
+            console.log(allData[8]);
+            
+            res.render('admin/graph',{   
+            OnlinePymentcount: allData[0],
+            totalUser: allData[1],
+            totalOrder: allData[2],
+            cancelOrder: allData[3],
+            totalCod: allData[4],
+            Placed: allData[5],
+            Shipped: allData[6],
+            Deliverd: allData[7],
+            totalCost: allData[8]
+          })
+      
+    } catch (error) {
+      next(error)
+    }
+  } )
+
+ 
+
 router.post('/add-product',function (req,res){
   console.log(req.body);
   productHelpers.addProduct(req.body,(id)=>{
@@ -100,11 +153,7 @@ router.get('/admin-user-view',function (req,res){
   
 })
 router.get('/coupon',function (req,res){
-  console.log('a');
-  console.log(req.body);
-  console.log('a',req.params);
     productHelpers.getCoupons().then((coupons)=>{
-      console.log('hil');
       console.log(coupons);
       res.render('admin/coupon',{coupons,adminOn})  
     })
@@ -119,7 +168,6 @@ router.post('/coupon',function (req,res){
 })
 
 router.post('/changestatus',function (req,res){
-  console.log('k',req.body)
   let userId=req.session.userId
    userHelpers.changeOrderStatus(req.body.proId,req.body.status,userId).then((res)=>{
     console.log(res)

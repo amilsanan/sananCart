@@ -1,5 +1,5 @@
 var db=require('../config/connection')
-var collection=require('../helpers/product-helpers')
+var collection=require('../config/collections');
 var objectId=require('mongodb').ObjectId
 var bcrypt=require('bcrypt')
 const { response } = require('express')
@@ -68,5 +68,110 @@ module.exports={
         }
             })
         
-    }
+    },
+    onlinePaymentCount: () => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let count = await db.get().collection(collection.ORDER_COLLECTION).find({ address:{payment_method: "ONLINE" }}).count()
+                resolve(count)
+            } catch (err) {
+                reject(err)
+            }
+
+        })
+    },
+    totalUsers: () => {
+        return new Promise(async (resolve, reject) => {
+          try {
+            let count = await db.get().collection(collection.USER_COLLECTION).find().count()
+            resolve(count)
+          } catch (err) {
+            reject(err)
+          }
+        })
+      },
+  totalOrder: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let count = await db.get().collection(collection.ORDER_COLLECTION).find().count()
+        resolve(count)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  },
+  cancelOrder: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let count = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+          {
+            $match: {
+              'status': 'canceled'
+            }
+          }, {
+            $count: 'number'
+          }
+
+        ]).toArray()
+        resolve(count)
+        console.log(count);
+      } catch (err) {
+        reject(err)
+      }
+
+    })
+  },
+    totalCOD: () => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let count = await db.get().collection(collection.ORDER_COLLECTION).find({'address.payment_method ': "ONLINE" }).toArray()
+                resolve(count)
+            } catch (err) {
+                reject(err)
+            }
+        })
+
+    },
+  totalDeliveryStatus: (data) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let statusCount = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+        {
+            $match: {
+              'status': data
+
+            }
+          }, {
+            $count: 'number'
+          }
+
+        ]).toArray()
+        resolve(statusCount)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  },
+  totalCost: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        total = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+          {
+            $project: {
+              'totalAmount': 1
+            }
+          },
+          {
+            $group: {
+              _id: null,
+              sum: { $sum: '$totalAmount' }
+            }
+          }
+        ]).toArray()
+        resolve(total)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  }
 }
