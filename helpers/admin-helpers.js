@@ -124,7 +124,7 @@ module.exports={
     totalCOD: () => {
         return new Promise(async (resolve, reject) => {
             try {
-                let count = await db.get().collection(collection.ORDER_COLLECTION).find({'address.payment_method ': "ONLINE" }).toArray()
+                let count = await db.get().collection(collection.ORDER_COLLECTION).find({address:{ payment_method : "COD" }}).toArray()
                 resolve(count)
             } catch (err) {
                 reject(err)
