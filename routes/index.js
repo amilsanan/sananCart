@@ -54,6 +54,7 @@ router.post('/otp', (req, res)=> {
   console.log(phonenumber);
   verify.otpVerify(req.body,phonenumber).then((response)=>{
     req.session.loggedIn=true
+    req.session.coupon=0
     console.log(response);
     res.redirect('/')
 
@@ -79,7 +80,7 @@ router.post('/login',(req,res)=>{
     if(response.status){
       req.session.loggedIn=true
       req.session.userId=response.user._id
-      
+      req.session.coupon=0
       res.redirect('/')
     }else{
       res.redirect("/login")
@@ -202,11 +203,13 @@ router.get('/succesPage',verifyLogin,(req,res)=>{
   res.render('user/paymentSuccessfillPage')
 })
 
-router.post('/verify-payment',(req,res)=>{
+router.post('/verify-payment',async(req,res)=>{
   console.log('miuy=',req.body);
+  let amt=await userHelpers.getTotalAmount(req.session.userId)
+  amt=amt-req.session.coupon
   userHelpers.verifyPayment(req.body).then(async(status)=>{
     console.log('sts',status);
-    await userHelpers.createOrderSummery(req.session.userId)
+    await userHelpers.createOrderSummery(req.session.userId,amt,req.session.couponName)
     res.json({status:true})
   }).catch((err)=>{
     console.log('err',err);
@@ -223,7 +226,7 @@ router.post('/place-order',verifyLogin,async (req,res)=>{
   if(req.body.payment_method=='COD'){
     res.json({codSuccess:true})
     console.log('good');
-    await userHelpers.createOrderSummery(req.session.userId)
+    await userHelpers.createOrderSummery(req.session.userId,amt,req.session.couponName)
     console.log('order placed succefully')
     
   } else{
@@ -236,10 +239,30 @@ router.post('/place-order',verifyLogin,async (req,res)=>{
 })
 router.get('/Orders',verifyLogin,(req,res)=>{
   userHelpers.getOrder(req.session.userId).then((details)=>{
-    console.log("123",details);
+    console.log("12553",details);
+    
     res.render('user/viewOrders',{details})
+  })  
+})
+
+router.get('/addAddress',verifyLogin,(req,res)=>{
+  res.render('user/addAddress')
+})
+
+router.post('/addAddress',verifyLogin,(req,res)=>{
+  console.log(req.body);
+  userHelpers.addingUserAddress(req.body,req.session.userId).then((raes)=>{
+    res.redirect('/login')
   })
-  
+})
+
+router.get('/Orderlist/:id',verifyLogin,(req,res)=>{
+  console.log("l=",req.params.id);
+  userHelpers.getOrderList(req.params.id).then((details)=>{
+    console.log("123",details);
+    
+    res.render('user/viewSingleOrder',{details})
+  })
 })
 
 router.get('/edit_profile',async(req,res)=>{
@@ -269,7 +292,8 @@ router.get('/logout',(req,res)=>{
 router.post('/change-quantity',verifyLogin,(req,res,next)=>{
   console.log('hi22');
   userHelpers.cartQuantity(req.body).then(async(response) => {
-    response.total = await userHelpers.getTotalAmount(req.session.userId)
+    response.subtotal = await userHelpers.getTotalAmount(req.session.userId)
+    response.total = response.subtotal -req.session.coupon
     res.json(response)
   })
 })
@@ -279,8 +303,9 @@ router.post('/cheackCoupon',verifyLogin,(req,res,next)=>{
   console.log('sds=',req.body);
   userHelpers.cheackCoupon(req.body.couponcode).then((response)=>{
     console.log('response',response);
-    req.session.coupon=response.c.couponPercentage
     if(response.copounStatus==true){
+      req.session.coupon=response.c.couponPercentage
+      req.session.couponName=response.c.couponName
       res.json(response)
     }
     else{

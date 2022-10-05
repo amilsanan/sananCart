@@ -4,37 +4,43 @@
     <table class="table ">
       <thead>
         <tr>
-          <th scope="col">no</th>
+          {{!-- <th scope="col">no</th> --}}
           <th scope="col">date</th>
-          <th scope="col">name</th>
-          <th scope="col">price</th>
-          <th scope="col">quantity</th>
+          <th scope="col">order ID</th>
+          <th scope="col">coupon</th>
+          <th scope="col">total amount</th>
+          <th scope="col">payment method</th>
+          
           <th scope="col">address</th>
-          <th scope="col">image</th>
-          <th scope="col">status</th>
         </tr>
       </thead>
       <tbody>
         {{#each details}}
-        {{#each this.products}}
+        
+        {{!-- {{#each this.products}} --}}
         <tr>
-          <th scope="row">{{@index}}</th>
-          <td>{{../this.date}}</td>
+          {{!-- <th scope="row">{{@index}}</th> --}}
+          <td>{{this.date}}</td>
           
-          <td>{{this.product.Name}}</td>
-          <td>{{this.product.price}}</td>
+          <td>{{this._id}}</td>
+          <td>{{this.couponCode}}</td>
+          <td>{{this.totalAmount}}</td>
           {{!-- <td>{{this.product.price}}</td> --}}
-          <td>{{this.quantity}}</td>
+          {{!-- <td>{{this.quantity}}</td> --}}
           
           
-          <td>{{this.address.payment_method}},{{../this.address.firstName}},{{../this.address.lastName}}</td>
-          <td><img style="width:50px;height:50px " src='/product-images/{{this.product._id}}.jpg' alt=""></td>
-          <td>{{this.order_status}}</td>
+          <td>{{this.address.payment_method}}</td>
+            <td>{{this.address.firstName}},{{this.address.lastName}},{{this.address.moreAddress}}</td>
+          {{!-- <td><img style="width:50px;height:50px " src='/product-images/{{this.product._id}}.jpg' alt=""></td> --}}
+          {{!-- <td>{{this.order_status}}</td> --}}
+          <td><a href="/Orderlist/{{this._id}}">view products</a></td>
+        {{!-- <td><button onclick="invoice()">download bill</button>{{c}}</td> --}}
           
         </tr>
-        {{/each}}
+        {{!-- {{/each}} --}}
         {{/each}}
       </tbody>
     </table>
   </div>
 </section>
+

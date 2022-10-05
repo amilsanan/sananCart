@@ -160,7 +160,7 @@
                         <button type="submit" >Apply</button>
                     </form>
                 </div>
-                <div class="cart__total">
+                <div class="cart__total" id="cartre">
                     <h6>Cart total</h6>
                     <ul>
                         <li>Subtotal <span id="subtotal">{{totalvalue}}</span></li>
@@ -272,8 +272,8 @@
 
 
 <script>
-    let z=document.getElementById('subtotal').innerHTML
-    z=parseInt(z)
+   // let z=document.getElementById('subtotal').innerHTML
+   // z=parseInt(z)
     $('#couponcode').submit((e) => {
     console.log("jkdhsjak")
   e.preventDefault()
@@ -284,11 +284,12 @@
     success: (response) => {
         if(response.copounStatus==true){
         document.getElementById('cou').innerHTML=-response.c.couponPercentage
-        document.getElementById('total').innerHTML= z-response.c.couponPercentage
+        let s= document.getElementById('subtotal').innerHTML-response.c.couponPercentage
+        document.getElementById('total').innerHTML='Rs.'+s
         }else{
         document.getElementById('cou').innerHTML="no valid coupon"
             
-        }total
+        }
 
     }
   })
@@ -325,8 +326,10 @@
 
                     }
 
-                document.getElementById('subtotal').innerHTML ='Rs.'+ response.total
+                document.getElementById('subtotal').innerHTML =response.subtotal
+               // let q=document.getElementById('subtotal').innerHTML
                 document.getElementById('total').innerHTML ='Rs.'+ response.total
+                //document.getElementById('cartre').innerHTML=q
 
             }
         })

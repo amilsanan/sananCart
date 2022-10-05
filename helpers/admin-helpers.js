@@ -72,12 +72,23 @@ module.exports={
     onlinePaymentCount: () => {
         return new Promise(async (resolve, reject) => {
             try {
-                let count = await db.get().collection(collection.ORDER_COLLECTION).find({ address:{payment_method: "ONLINE" }}).count()
-                resolve(count)
+                let count = await db.get().collection(collection.ORDER_COLLECTION).find().toArray()
+                let a=0
+            //     a= count.forEach((element) => {
+            //         element.ad:s})
+            // let cx=count.length
+            let g=count[0].address.payment_method
+            // let c = Object.keys(g).length
+            for(i=0;i<count.length;i++){
+                if(count[i].address.payment_method=="ONLINE")
+                a++;
+            }
+                    // console.log("Aaz=",g);
+                    // console.log("Az=",cx);
+                resolve(a)
             } catch (err) {
                 reject(err)
             }
-
         })
     },
     totalUsers: () => {
@@ -124,34 +135,75 @@ module.exports={
     totalCOD: () => {
         return new Promise(async (resolve, reject) => {
             try {
-                let count = await db.get().collection(collection.ORDER_COLLECTION).find({address:{ payment_method : "COD" }}).toArray()
-                resolve(count)
+                let count = await db.get().collection(collection.ORDER_COLLECTION).find().toArray()
+                let a=0
+            //     a= count.forEach((element) => {
+            //         element.ad:s})
+            // let cx=count.length
+            let g=count[0].address.payment_method
+            // let c = Object.keys(g).length
+            for(i=0;i<count.length;i++){
+                if(count[i].address.payment_method=="COD")
+                a++;
+            }
+                    // console.log("Aaz=",g);
+                    // console.log("Az=",cx);
+                resolve(a)
             } catch (err) {
                 reject(err)
             }
         })
 
     },
-  totalDeliveryStatus: (data) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let statusCount = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
-        {
-            $match: {
-              'status': data
-
+    totalDeliveryStatus: (status) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let count = await db.get().collection(collection.ORDER_COLLECTION).find().toArray()
+                let a=0
+            //     a= count.forEach((element) => {
+            //         element.ad:s})
+            // let cx=count.length
+            // let g=count[2].products[0].order_status
+            // console.log(g);
+            // let c = Object.keys(g).length
+            for(i=0;i<count.length;i++){
+              for(j=0;j<count[i].products.length;j++){
+                if(count[i].products[j].order_status==status){
+                  a++
+                }
+              }  
             }
-          }, {
-            $count: 'number'
-          }
+            console.log(status,'=',a);              
+                    // console.log("Aaz=",a);
+                    // console.log("DFdsds=",count);
+                    // console.log("Amjz=",count[1].products);
+                resolve(a)
+            } catch (err) {
+                reject(err)
+            }
+        })
 
-        ]).toArray()
-        resolve(statusCount)
-      } catch (err) {
-        reject(err)
-      }
-    })
-  },
+    },
+  // totalDeliveryStatus: (data) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       let statusCount = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+  //       {
+  //           $match: {
+  //             'status': data
+
+  //           }
+  //         }, {
+  //           $count: 'number'
+  //         }
+
+  //       ]).toArray()
+  //       resolve(statusCount)
+  //     } catch (err) {
+  //       reject(err)
+  //     }
+  //   })
+  // },
   totalCost: () => {
     return new Promise(async (resolve, reject) => {
       try {

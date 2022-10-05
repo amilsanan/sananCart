@@ -6,6 +6,7 @@ const { CART } = require('../config/collections');
 var ObjectId=require('mongodb').ObjectId
 const Razorpay = require('razorpay');
 const { isNull } = require('util');
+const { resolve } = require('path');
 
 let cartQuan=1
 
@@ -84,7 +85,7 @@ module.exports={
                 let proExist=userCart.products.findIndex(product=> product.item==proId)
                 console.log('proExit=',proExist);
                 if(proExist==-1){
-                //     db.get().collection(collection.CART_COLLECTION).updateOne({user:ObjectId(userId),'product.item':ObjectId(proId)},
+                //     db.get().collection(collection.CART_COLLECTION).updateOne({user:ObjectIdw(userId),'product.item':ObjectId(proId)},
                 //     {
                 //         $inc:{'products.$.quanitity':1}
                 //     }
@@ -398,7 +399,7 @@ module.exports={
         await db.get().collection(collection.CART_COLLECTION).update({"user":ObjectId(userId)}, 
         {'$set':{"address":userAddress}})
     },
-    createOrderSummery:(userId)=>{
+    createOrderSummery:(userId,amt,coupon)=>{
         console.log(userId);
         return new Promise(async(resolve, reject) => {
             
@@ -448,11 +449,13 @@ module.exports={
                 user:order_Coll.user,
                 quantity:pro_detail[0].quantity,
                 products:pro_detail,
-                address:order_Coll.address
+                address:order_Coll.address,
+                totalAmount:amt,
+                couponCode:coupon
             }
             console.log('a=',orderlist);
            await db.get().collection(collection.ORDER_COLLECTION).insertOne(orderlist)
-           await db.get().collection(collection.CART_COLLECTION).deleteOne({"user":ObjectId(userId)})
+           //await db.get().collection(collection.CART_COLLECTION).deleteOne({"user":ObjectId(userId)})
            
            resolve(order_Coll)
         })
@@ -462,10 +465,16 @@ module.exports={
             resolve(ordertems)
         })
     },
-    changeOrderStatus:(proId,status,userId)=>{
+    getOrderList:(proId)=>{
+        return new Promise(async(resolve, reject) => {
+          let ordertems=await db.get().collection(collection.ORDER_COLLECTION).find({"_id":ObjectId(proId)}).toArray()
+            resolve(ordertems)
+        })
+    },
+    changeOrderStatus:(proId,status,orderId)=>{
         return new Promise(async(resolve, reject) => {
             await db.get().collection(collection.ORDER_COLLECTION).findOneAndUpdate(
-                    { user:ObjectId(userId),
+                    { _id:ObjectId(orderId),
                        "products.item":ObjectId(proId)
                     },
                     { $set:{
@@ -510,8 +519,39 @@ module.exports={
     else{
             let copounStatus=false
             console.log('no coupon');
+           // c.couponPercentage=0
             resolve(copounStatus)
         }
+        })
+    },
+    addingUserAddress:(body,userId)=>{
+        addd=[]
+        
+        let address={
+            user:ObjectId(userId),
+            address:[]
+            
+        }
+       return new Promise(async(resolve,reject)=>{
+        let add=await db.get().collection(collection.CART_COLLECTION).findOne({user:ObjectId(userId)})
+        if(add!=null){
+            console.log('y');
+            addd.push(body)
+            db.get().collection(collection.CART_COLLECTION).updateOne({user:ObjectId(userId)},
+                    {
+                        $push:{addressbody}
+                    })
+        }else {
+            console.log('n');
+        await db.get().collection(collection.ADDRESS_COLLECTION).insertOne(address)
+        }
+        resolve()
+       })
+    },
+    getAddress:()=>{
+        return new Promise(async (resolve, reject) => {
+        let address = await db.get().collection(collection.ADDRESS_COLLECTION).find({ UserId: ObjectId(UserId)}).toArray()            
+        resolve(address)
         })
     },
     //kkkkk

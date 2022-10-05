@@ -7,6 +7,8 @@
           <th scope="col">user</th>
           <th scope="col">date</th>
           <th scope="col">order id</th>
+          <th scope="col">toatal amount</th>
+          <th scope="col">coupon</th>
           <th scope="col">payment method</th>
           <th scope="col">address</th>
         </tr>
@@ -19,9 +21,11 @@
           <td>{{this.user}}</td>
           <td>{{this.date}}</td>
           <td>{{this._id}}</td>
+          <td>{{this.totalAmount}}</td>
+          <td>{{this.couponCode}}</td>
           <td>{{this.address.payment_method}}</td>
           <td>{{this.address.firstName}},{{this.address.moreAddress}},{{this.address.streetName}},{{this.address.pin}}</td>
-          <td><a href="/admin/orderProView/{{this.user}}">view products</a></td>
+          <td><a href="/admin/orderProView/{{this._id}}">view products</a></td>
         </tr>
         {{/each}}
       </tbody>

@@ -1,0 +1,40 @@
+<form action="/addAddress" method="post">
+    <div class="col-lg-8 col-md-6 container mt-5">
+
+        <div class="row">
+            <div class="checkout__input">
+                <div class="checkout__input">
+                    <p>Fist Name<span>*</span></p>
+                    <input type="text" name="firstName" >
+                </div>
+            </div>
+
+        </div>
+        <div class="checkout__input">
+            <p>Address<span>*</span></p>
+            <input type="text"  class="checkout__input__add" name="address">
+            {{!-- <input type="text" value="{{a.[0].address1}}" name="moreAddress"> --}}
+        </div>
+
+        <div class="checkout__input">
+            <p>pin<span>*</span></p>
+            <input type="text" name="pin" >
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="checkout__input">
+                    <p>Phone<span>*</span></p>
+                    <input type="text" name="phone" >
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="checkout__input">
+                    <p>Email<span>*</span></p>
+                    <input type="text" name="email" >
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">add address</button>
+
+    </div>
+</form>

@@ -44,10 +44,10 @@ router.get('/add-product',function (req,res){
       
   
         
-        let delivery = {}
+      /*  let delivery = {}
         delivery.Placed = 'placed'
         delivery.Shipped = 'shipped'
-        delivery.Deliverd = 'deliverd'
+        delivery.Deliverd = 'deliverd'*/
         const allData = await Promise.all
             ([
               adminHelpers.onlinePaymentCount(),
@@ -55,9 +55,10 @@ router.get('/add-product',function (req,res){
               adminHelpers.totalOrder(),
               adminHelpers.cancelOrder(),
               adminHelpers.totalCOD(),
-              adminHelpers.totalDeliveryStatus(delivery.Placed),
-              adminHelpers.totalDeliveryStatus(delivery.Shipped),
-              adminHelpers.totalDeliveryStatus(delivery.Deliverd),
+              adminHelpers.totalDeliveryStatus("placed"),
+              adminHelpers.totalDeliveryStatus("delivered"),
+              adminHelpers.totalDeliveryStatus("shipped"),
+              adminHelpers.totalDeliveryStatus("canceled"),
               adminHelpers.totalCost(),
         
             ]);
@@ -71,18 +72,20 @@ router.get('/add-product',function (req,res){
             console.log('5=',allData[5]);
             console.log(allData[6]);
             console.log('7',allData[7]);
-            console.log(allData[8]);
+            console.log('cancel',allData[8]);
             
-            res.render('admin/graph',{   
+            res.render('admin/graph',{ 
+                
             OnlinePymentcount: allData[0],
             totalUser: allData[1],
             totalOrder: allData[2],
             cancelOrder: allData[3],
             totalCod: allData[4],
             Placed: allData[5],
-            Shipped: allData[6],
-            Deliverd: allData[7],
-            totalCost: allData[8]
+            Deliverd: allData[6],
+            Shipped: allData[7],
+            canceled: allData[8],
+            totalCost: allData[9],adminOn
           })
       
     } catch (error) {
@@ -168,8 +171,9 @@ router.post('/coupon',function (req,res){
 })
 
 router.post('/changestatus',function (req,res){
-  let userId=req.session.userId
-   userHelpers.changeOrderStatus(req.body.proId,req.body.status,userId).then((res)=>{
+  let userId=req.body.userId
+  console.log('hi',req.body); 
+   userHelpers.changeOrderStatus(req.body.proId,req.body.status,req.body.orderId).then((res)=>{
     console.log(res)
     res.json(res);
    })
@@ -183,10 +187,10 @@ router.get('/orderSummery',function (req,res){
 })
 
 router.get('/orderProView/:id',function (req,res){
-  let userId=req.params.id
-  userHelpers.getOrder(userId).then((items)=>{
+  let proId=req.params.id
+  userHelpers.getOrderList(proId).then((items)=>{
     console.log('items=',items);
-    res.render("admin/orderProductVIew",{items,adminOn,userId})    
+    res.render("admin/orderProductVIew",{items,adminOn})    
   })
 })
 
