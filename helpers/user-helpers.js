@@ -455,7 +455,7 @@ module.exports={
             }
             console.log('a=',orderlist);
            await db.get().collection(collection.ORDER_COLLECTION).insertOne(orderlist)
-           //await db.get().collection(collection.CART_COLLECTION).deleteOne({"user":ObjectId(userId)})
+           await db.get().collection(collection.CART_COLLECTION).deleteOne({"user":ObjectId(userId)})
            
            resolve(order_Coll)
         })
